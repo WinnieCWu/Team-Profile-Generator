@@ -22,6 +22,20 @@ const promptUser = () => {
         },
         {
             type: 'input',
+            name: 'employeeName', //or should this be generic name?
+            //every employee's name will be asked
+            message: "What is your name?",
+            validate: nameInput => {
+                if (nameInput) {
+                    return true;
+                  } else {
+                    console.log("Please enter your name!");
+                    return false;
+                  }
+            }
+        },
+        {
+            type: 'input',
             name: 'employeeId',
             message: "What is your employee ID number?",
             validate: employeeIdInput => {
@@ -62,12 +76,16 @@ const promptUser = () => {
     ]);
 };
 
-const promptAddEmployee = () => {
+const promptAddEmployee = (managerData) => {
     console.log(`
     ================
     Add an Employee
     ================
     `)
+
+    if(!managerData.employee) {
+        managerData.employee = [];
+    }
     return inquirer
     .prompt([
         {
@@ -112,6 +130,16 @@ const promptAddEmployee = () => {
             name: 'goodbyeGreeting',
             message: 'Thank you for your inputs in building your team profile! Your team profile will be generated shortly on the webpage.'
         }
-    ]);
+    ])
+    //add manager data to employee array
+    .then(employeeData => {
+        managerData.employee.push(employeeData);
+        //evaluate if user wishes to add another team member
+        if(employeeData.confirmAddEmployee) {
+            return promptAddEmployee(managerData);
+        } else {
+            return managerData; 
+        }
+    });
 };
 

@@ -7,6 +7,7 @@ const generateEmployee = aboutEmployee => {
         <section class="my-3" id="about">
             <h2 class="text-dark bg-primary p-2 display-inline-block">About My Team Member</h2>
             <p>${aboutEmployee}</p>
+            <p>
         </section>
     `;
 };

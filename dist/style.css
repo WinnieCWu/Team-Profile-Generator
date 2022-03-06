@@ -1,7 +1,7 @@
 :root {
-    --primary: #9dbdc6;
+    --primary: #3366cc;
     --secondary: #daeaef;
-    --tertiary: #ff3d2e;
+    --tertiary: #ff9966;
     --light: #ffffff;
     --dark: #272f32;
 }
@@ -21,6 +21,12 @@ body {
     font-size: 16px;
 }
 
+.box {
+  width: 200px;
+  padding: 20px;
+  bordeR: 5px solid gray;
+  margin: 0;
+}
 p {
     font-size: 1.1rem;
     margin-top: 0;
