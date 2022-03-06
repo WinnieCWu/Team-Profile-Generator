@@ -4,11 +4,11 @@ test('creates a manager object', () => {
     const manager = new Manager('Rody');
 
     expect(manager.name).toBe('Rody');
-    expect(manager.id).toBe(expect.any(Number));
+    expect(manager.id).toEqual(expect.any(Number));
     expect(manager.email).toBe('Rody@gmail.com');
     expect(manager.role).toBe('Manager');
 
-    expect(manager.officeNumber).toBe('1');
+    expect(manager.officeNumber).toEqual(expect.any(Number));
 
     manager.getName();
     manager.getId();

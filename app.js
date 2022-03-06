@@ -94,8 +94,6 @@ const promptAddEmployee = (managerData) => {
             message: 'Would you like to add another employee from your team? Please select their role and respond to the additional prompts.',
             choices: ['Engineer', 'Intern', 'Finished building my team']
         },
-        //add coding here for if they select Engineer
-        ///prompted to enter the engineer’s name, ID, email, and GitHub username, then sent to main menu
         {
             type: 'input',
             name: 'github',
@@ -109,12 +107,10 @@ const promptAddEmployee = (managerData) => {
               }
             }
           },
-        //add coding here for if they select Intern
-        ///prompted to enter the intern’s name, ID, email, and school
         {
             type: 'input',
             name: 'school',
-            message: 'Enter your school name',
+            message: "Enter your school name. If you're not in school anymore, please enter 'N/A'",
             validate: schoolInput => {
               if (schoolInput) {
                 return true;
@@ -125,6 +121,8 @@ const promptAddEmployee = (managerData) => {
             }
           },
         //add coding here if checked they're finish building their team
+        //if no, then restart the inquirer prompt
+        //if yes, display message below
         {
             type: 'input',
             name: 'goodbyeGreeting',
