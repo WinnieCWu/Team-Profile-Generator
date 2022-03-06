@@ -1,12 +1,15 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
+const { writeFile } = require('./index.js');
+const generatePage = require('./src/page-template.js');
 
 const promptUser = () => {
     return inquirer
     .prompt([
         {
         type: 'input',
-        name: 'teamManagerName',
+        name: 'teamManagerName', //or should this be generic name?
+        //every employee's name will be asked
         message: "What is team manager's name?",
         validate: nameInput => {
             if (nameInput) {
@@ -75,8 +78,34 @@ const promptAddEmployee = () => {
         },
         //add coding here for if they select Engineer
         ///prompted to enter the engineer’s name, ID, email, and GitHub username, then sent to main menu
+        {
+            type: 'input',
+            name: 'github',
+            message: 'Enter your GitHub username',
+            validate: githubInput => {
+              if (githubInput) {
+                return true;
+              } else {
+                console.log('Please enter your GitHub username!');
+                return false;
+              }
+            }
+          },
         //add coding here for if they select Intern
         ///prompted to enter the intern’s name, ID, email, and school
+        {
+            type: 'input',
+            name: 'school',
+            message: 'Enter your school name',
+            validate: schoolInput => {
+              if (schoolInput) {
+                return true;
+              } else {
+                console.log('Please enter your school name!');
+                return false;
+              }
+            }
+          },
         //add coding here if checked they're finish building their team
         {
             type: 'input',

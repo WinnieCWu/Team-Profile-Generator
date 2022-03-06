@@ -10,7 +10,8 @@ My motivation is to generate a webpage that displays my team's basic information
 - [License](#license)
 
 ## Installation
-No extra requirments, aside from a working computer and internet.
+As the developer, I used Node.js's Jest to test the code and Inquirer to access prompts.
+No extra installations are needed for the user, aside from a working computer and internet.
 
 ## Usage
 Please check out the attached link for a video tutorial of how to use the app, as well as live tests for my application.
