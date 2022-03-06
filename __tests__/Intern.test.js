@@ -9,4 +9,10 @@ test('creates an intern object', () => {
     expect(intern.role).toBe('Intern');
 
     expect(intern.school).toBe('UC Berkeley');
+
+    intern.getName();
+    intern.getId();
+    intern.getEmail();
+    intern.getSchool();
+    intern.getRole();
 });

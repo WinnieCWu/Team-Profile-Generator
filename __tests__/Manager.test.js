@@ -9,4 +9,10 @@ test('creates a manager object', () => {
     expect(manager.role).toBe('Manager');
 
     expect(manager.officeNumber).toBe('1');
+
+    manager.getName();
+    manager.getId();
+    manager.getEmail();
+    manager.getOfficeNumber();
+    manager.getRole();
 });

@@ -9,4 +9,10 @@ test('creates an engineer object', () => {
     expect(engineer.role).toBe('Engineer');
 
     expect(engineer.github).toBe('RodyT');
+
+    engineer.getName();
+    engineer.getId();
+    engineer.getEmail();
+    engineer.getGithub();
+    engineer.getRole();
 });
