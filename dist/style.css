@@ -54,3 +54,10 @@ nav {
     margin-left: auto;
     margin-right: auto;
   }
+
+  .employee-name-role{
+    margin: 20px;
+    background-color: var(--primary);
+    color: var(--light)
+    flex: 1
+  }

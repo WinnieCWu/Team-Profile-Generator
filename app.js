@@ -1,143 +1,255 @@
-const inquirer = require('inquirer');
-const fs = require('fs');
-const { writeFile } = require('./index.js');
-const generatePage = require('./src/page-template.js');
+const inquirer = require("inquirer");
+const fs = require("fs");
+const { writeFile } = require("./index.js");
+const generatePage = require("./src/page-template.js");
 
-const promptUser = () => {
-    return inquirer
+const Manager = require('./lib/Manager');
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
+
+const employees = [];
+
+const promptManager = () => {
+  inquirer
     .prompt([
-        {
-        type: 'input',
-        name: 'teamManagerName', //or should this be generic name?
-        //every employee's name will be asked
+      {
+        type: "input",
+        name: "teamManagerName",
         message: "What is team manager's name?",
-        validate: nameInput => {
-            if (nameInput) {
-                return true;
-              } else {
-                console.log("Please enter the team manager's name!");
-                return false;
-              }
-            }
-        },
-        {
-            type: 'input',
-            name: 'employeeName', //or should this be generic name?
-            //every employee's name will be asked
-            message: "What is your name?",
-            validate: nameInput => {
-                if (nameInput) {
-                    return true;
-                  } else {
-                    console.log("Please enter your name!");
-                    return false;
-                  }
-            }
-        },
-        {
-            type: 'input',
-            name: 'employeeId',
-            message: "What is your employee ID number?",
-            validate: employeeIdInput => {
-                if (employeeIdInput) {
-                    return true;
-                } else {
-                    console.log("Please enter your employee ID number!");
-                    return false;
-                }
-            }
-        },
-        {
-            type: 'input',
-            name: 'emailAddress',
-            message: "What is your e-mail address?",
-            validate: emailAddressInput => {
-                if (emailAddressInput) {
-                    return true;
-                } else {
-                    console.log("Please enter your e-mail address!");
-                    return false;
-                }
-            }
-        },
-        {
-            type: 'input',
-            name: 'officeNumber',
-            message: "What is your office space number?",
-            validate: officeNumberInput => {
-                if (officeNumberInput) {
-                    return true;
-                } else {
-                    console.log("Please enter your office space number!");
-                    return false;
-                }
-            }
+        validate: (nameInput) => {
+          if (nameInput) {
+            return true;
+          } else {
+            console.log("Please enter the team manager's name!");
+            return false;
+          }
         }
-    ]);
-};
-
-const promptAddEmployee = (managerData) => {
-    console.log(`
-    ================
-    Add an Employee
-    ================
-    `)
-
-    if(!managerData.employee) {
-        managerData.employee = [];
-    }
-    return inquirer
-    .prompt([
-        {
-            type: 'checkbox',
-            name: 'addEmployee',
-            message: 'Would you like to add another employee from your team? Please select their role and respond to the additional prompts.',
-            choices: ['Engineer', 'Intern', 'Finished building my team']
-        },
-        {
-            type: 'input',
-            name: 'github',
-            message: 'Enter your GitHub username',
-            validate: githubInput => {
-              if (githubInput) {
-                return true;
-              } else {
-                console.log('Please enter your GitHub username!');
-                return false;
-              }
-            }
-          },
-        {
-            type: 'input',
-            name: 'school',
-            message: "Enter your school name. If you're not in school anymore, please enter 'N/A'",
-            validate: schoolInput => {
-              if (schoolInput) {
-                return true;
-              } else {
-                console.log('Please enter your school name!');
-                return false;
-              }
-            }
-          },
-        //add coding here if checked they're finish building their team
-        //if no, then restart the inquirer prompt
-        //if yes, display message below
-        {
-            type: 'input',
-            name: 'goodbyeGreeting',
-            message: 'Thank you for your inputs in building your team profile! Your team profile will be generated shortly on the webpage.'
+      },
+      {
+        type: "input",
+        name: "employeeId",
+        message: "What is your employee ID number?",
+        validate: (employeeIdInput) => {
+          if (employeeIdInput) {
+            return true;
+          } else {
+            console.log("Please enter your employee ID number!");
+            return false;
+          }
         }
+      },
+      {
+        type: "input",
+        name: "emailAddress",
+        message: "What is your e-mail address?",
+        validate: (emailAddressInput) => {
+          if (emailAddressInput) {
+            return true;
+          } else {
+            console.log("Please enter your e-mail address!");
+            return false;
+          }
+        }
+      },
+      {
+        type: "input",
+        name: "officeNumber",
+        message: "What is your office space number?",
+        validate: (officeNumberInput) => {
+          if (officeNumberInput) {
+            return true;
+          } else {
+            console.log("Please enter your office space number!");
+            return false;
+          }
+        }
+      },
     ])
-    //add manager data to employee array
-    .then(employeeData => {
-        managerData.employee.push(employeeData);
-        //evaluate if user wishes to add another team member
-        if(employeeData.confirmAddEmployee) {
-            return promptAddEmployee(managerData);
-        } else {
-            return managerData; 
-        }
+    .then((answers) => {
+      console.log(answers);
+      const manager = new Manager(
+        answers.teamManagerName,
+        answers.employeeId,
+        answers.emailAddress,
+        answers.officeNumber
+      );
+      employees.push(manager);
+      mainMenu();
     });
 };
 
+const mainMenu = () => {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        name: "memberChoice",
+        message: "What team member would you like to add?",
+        choices: ["add Engineer", "add Intern", "Finished building my team"],
+      },
+    ])
+    .then((answers) => {
+      console.log(answers);
+      if (answers.memberChoice === "add Engineer") {
+        addEngineer();
+      }
+      if (answers.memberChoice === "add Intern") {
+        addIntern();
+      }
+      if (answers.memberChoice === "Finished building my team") {
+        goodbyeGreeting();
+      }
+    });
+};
+
+const addEngineer = () => {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "employeeName",
+        message: "What is your employee's name?",
+        validate: (employeeNameInput) => {
+          if (employeeNameInput) {
+            return true;
+          } else {
+            console.log("Please enter your employee's name!");
+            return false;
+          }
+        }
+      },
+      {
+        type: "input",
+        name: "employeeId",
+        message: "What is your employee's ID number?",
+        validate: (employeeIdInput) => {
+          if (employeeIdInput) {
+            return true;
+          } else {
+            console.log("Please enter your employee's ID number!");
+            return false;
+          }
+        }
+      },
+      {
+        type: "input",
+        name: "emailAddress",
+        message: "What is your employee's e-mail address?",
+        validate: (emailAddressInput) => {
+          if (emailAddressInput) {
+            return true;
+          } else {
+            console.log("Please enter your employee's e-mail address!");
+            return false;
+          }
+        }
+      },
+      {
+        type: "input",
+        name: "github",
+        message: "Enter your employee's GitHub username",
+        validate: (githubInput) => {
+          if (githubInput) {
+            return true;
+          } else {
+            console.log("Please enter your GitHub username!");
+            return false;
+          }
+        }
+      }
+    ])
+    .then((answers) => {
+      //Create Engineer Object and add to Employee Array
+      console.log(answers);
+      const engineer = new Engineer(
+        answers.employeeName,
+        answers.employeeId,
+        answers.emailAddress,
+        answers.github
+      );
+      employees.push(engineer);
+      mainMenu();
+    });
+};
+
+const addIntern = () => {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "employeeName",
+        message: "What is your employee's name?",
+        validate: (employeeNameInput) => {
+          if (employeeNameInput) {
+            return true;
+          } else {
+            console.log("Please enter your employee's name!");
+            return false;
+          }
+        }
+      },
+      {
+        type: "input",
+        name: "employeeId",
+        message: "What is your employee's ID number?",
+        validate: (employeeIdInput) => {
+          if (employeeIdInput) {
+            return true;
+          } else {
+            console.log("Please enter your employee's ID number!");
+            return false;
+          }
+        }
+      },
+      {
+        type: "input",
+        name: "emailAddress",
+        message: "What is your employee's e-mail address?",
+        validate: (emailAddressInput) => {
+          if (emailAddressInput) {
+            return true;
+          } else {
+            console.log("Please enter your employee's e-mail address!");
+            return false;
+          }
+        }
+      },
+      {
+        type: "input",
+        name: "school",
+        message:
+          "What is your school's name?",
+        validate: (schoolInput) => {
+          if (schoolInput) {
+            return true;
+          } else {
+            console.log("Please enter your school name!");
+            return false;
+          }
+        }
+      }
+    ])
+    .then((answers) => {
+      //Create Intern Object and add to Employee Array
+      console.log(answers);
+      const intern = new Intern(
+        answers.employeeName,
+        answers.employeeId,
+        answers.emailAddress,
+        answers.school
+      );
+      employees.push(intern);
+      mainMenu();
+    });
+};
+
+const goodbyeGreeting = () => {
+  inquirer.prompt({
+    type: "input",
+    name: "goodbyeGreeting",
+    message:
+      "Thank you for your inputs in building your team profile! Your team profile will be generated shortly on the webpage.",
+  });
+};
+
+promptManager();

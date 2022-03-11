@@ -1,16 +1,29 @@
-const Employee = require('../lib/Employee.js');
+const Employee = require("../lib/Employee.js");
 
-test('creates an employee object', () => {
-    const employee = new Employee('Rody');
+describe("Employee Class", () => {
+  test("gets user's name", () => {
+    const employee = new Employee("Rody", 7, "rody@gmail.com");
 
-    expect(employee.name).toBe('Rody');
-    expect(employee.id).toBe(expect.any(Number));
-    expect(employee.email).toBe('Rody@gmail.com');
-    expect(employee.role).toBe('Employee');
+    expect(employee.getName()).toBe("Rody");
+  });
 
-    employee.getName();
-    employee.getId();
-    employee.getEmail();
-    employee.getRole();
+  test("gets user's id number", () => {
+    const employee = new Employee("Rody", 7, "rody@gmail.com");
+
+    expect(employee.getId()).toBeGreaterThanOrEqual(1);
+    expect(employee.getId()).toBeLessThanOrEqual(10);
+    expect(employee.getId()).toBe(7);
+  });
+
+  test("gets user's email address", () => {
+    const employee = new Employee("Rody", 7, "rody@gmail.com");
+
+    expect(employee.getEmail()).toBe("rody@gmail.com");
+  });
+
+  test("gets user's role", () => {
+    const employee = new Employee("Rody", 7, "rody@gmail.com");
+
+    expect(employee.getRole()).toBe("Employee");
+  });
 });
-

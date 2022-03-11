@@ -4,10 +4,14 @@ const generateManager= aboutManager => {
         return '';
     }
     return `
-        <section class="my-3" id="aboutManager">
-            <h2 class="text-dark bg-primary p-2 display-inline-block">About Team Manager</h2>
-            <p>${aboutManager}</p>
-        </section>
+    <section class="my-3" id="about">
+        <div class="flex-row justify-space-between centered text-dark bg-primary p-2 display-inline-block"> About My Team Members 
+            <div class ="card col-12">
+                <h2 class ="employee-name-role">Employee Data</h2>
+                <p>${aboutManager}</p>
+            </div>
+        </div>
+    </section>
     `;
 };
 
@@ -17,10 +21,13 @@ const generateEmployee = aboutEmployee => {
         return '';
     }
     return `
-        <section class="my-3" id="aboutEmployee">
-            <h2 class="text-dark bg-primary p-2 display-inline-block">About My Team Member</h2>
-            <p>${aboutEmployee}</p>
-            <p>
-        </section>
+    <section class="my-3" id="about">
+        <div class="flex-row justify-space-between centered text-dark bg-primary p-2 display-inline-block"> About My Team Members 
+            <div class ="card col-12">
+                <h2 class ="employee-name-role">Employee Data</h2>
+                <p>${aboutEmployee}</p>
+            </div>
+        </div>
+    </section>
     `;
 };
