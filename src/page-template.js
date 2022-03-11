@@ -1,6 +1,8 @@
+const Manager = require("../lib/Manager");
+
 //create manager summary
-const generateManager= aboutManager => {
-    if (!aboutManager) {
+const generateManager=  (Manager) => {
+    if (!Manager) {
         return '';
     }
     return `
@@ -8,7 +10,7 @@ const generateManager= aboutManager => {
         <div class="flex-row justify-space-between centered text-dark bg-primary p-2 display-inline-block"> About My Team Members 
             <div class ="card col-12">
                 <h2 class ="employee-name-role">Employee Data</h2>
-                <p>${aboutManager}</p>
+                <p>${Manager}</p>
             </div>
         </div>
     </section>
@@ -16,8 +18,8 @@ const generateManager= aboutManager => {
 };
 
 //create employee summary
-const generateEmployee = aboutEmployee => {
-    if (!aboutEmployee) {
+const generateEmployees = (Engineer, Intern) => {
+    if (!Engineer || !Intern) {
         return '';
     }
     return `
@@ -25,7 +27,8 @@ const generateEmployee = aboutEmployee => {
         <div class="flex-row justify-space-between centered text-dark bg-primary p-2 display-inline-block"> About My Team Members 
             <div class ="card col-12">
                 <h2 class ="employee-name-role">Employee Data</h2>
-                <p>${aboutEmployee}</p>
+                <p>${Engineer}</p>
+                <p>${Intern}</p>
             </div>
         </div>
     </section>
