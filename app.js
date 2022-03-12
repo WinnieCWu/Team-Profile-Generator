@@ -3,9 +3,9 @@ const fs = require("fs");
 const { writeFile } = require("./index.js");
 const generatePage = require("./src/page-template.js");
 
-const Manager = require('./lib/Manager');
-const Engineer = require('./lib/Engineer');
-const Intern = require('./lib/Intern');
+const Manager = require("./lib/Manager");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
 
 const employees = [];
 
@@ -23,7 +23,7 @@ const promptManager = () => {
             console.log("Please enter the team manager's name!");
             return false;
           }
-        }
+        },
       },
       {
         type: "input",
@@ -36,7 +36,7 @@ const promptManager = () => {
             console.log("Please enter your employee ID number!");
             return false;
           }
-        }
+        },
       },
       {
         type: "input",
@@ -49,7 +49,7 @@ const promptManager = () => {
             console.log("Please enter your e-mail address!");
             return false;
           }
-        }
+        },
       },
       {
         type: "input",
@@ -62,7 +62,7 @@ const promptManager = () => {
             console.log("Please enter your office space number!");
             return false;
           }
-        }
+        },
       },
     ])
     .then((answers) => {
@@ -78,7 +78,11 @@ const promptManager = () => {
     });
 };
 
-const mainMenu = () => {
+const mainMenu = (employeeData) => {
+  if (!employeeData.employees) {
+    employeeData.employees = [];
+  }
+
   inquirer
     .prompt([
       {
@@ -116,7 +120,7 @@ const addEngineer = () => {
             console.log("Please enter your employee's name!");
             return false;
           }
-        }
+        },
       },
       {
         type: "input",
@@ -129,7 +133,7 @@ const addEngineer = () => {
             console.log("Please enter your employee's ID number!");
             return false;
           }
-        }
+        },
       },
       {
         type: "input",
@@ -142,7 +146,7 @@ const addEngineer = () => {
             console.log("Please enter your employee's e-mail address!");
             return false;
           }
-        }
+        },
       },
       {
         type: "input",
@@ -155,8 +159,8 @@ const addEngineer = () => {
             console.log("Please enter your GitHub username!");
             return false;
           }
-        }
-      }
+        },
+      },
     ])
     .then((answers) => {
       //Create Engineer Object and add to Employee Array
@@ -186,7 +190,7 @@ const addIntern = () => {
             console.log("Please enter your employee's name!");
             return false;
           }
-        }
+        },
       },
       {
         type: "input",
@@ -199,7 +203,7 @@ const addIntern = () => {
             console.log("Please enter your employee's ID number!");
             return false;
           }
-        }
+        },
       },
       {
         type: "input",
@@ -212,13 +216,12 @@ const addIntern = () => {
             console.log("Please enter your employee's e-mail address!");
             return false;
           }
-        }
+        },
       },
       {
         type: "input",
         name: "school",
-        message:
-          "What is your school's name?",
+        message: "What is your school's name?",
         validate: (schoolInput) => {
           if (schoolInput) {
             return true;
@@ -226,8 +229,8 @@ const addIntern = () => {
             console.log("Please enter your school name!");
             return false;
           }
-        }
-      }
+        },
+      },
     ])
     .then((answers) => {
       //Create Intern Object and add to Employee Array
@@ -244,12 +247,26 @@ const addIntern = () => {
 };
 
 const goodbyeGreeting = () => {
-  inquirer.prompt({
-    type: "input",
-    name: "goodbyeGreeting",
-    message:
-      "Thank you for your inputs in building your team profile! Your team profile will be generated shortly on the webpage.",
-  });
+  inquirer
+    .prompt({
+      type: "input",
+      name: "goodbyeGreeting",
+      message:
+        "Thank you for your inputs in building your team profile! Your team profile will be generated shortly on the webpage.",
+    })
+    .then((answers) => {
+      return answers;
+    });
 };
 
-promptManager();
+promptManager()
+  .then(mainMenu)
+  .then((employeeData) => {
+    return generatePage(employeeData);
+  })
+  .then((pageHTML) => {
+    return writeFile(pageHTML);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
