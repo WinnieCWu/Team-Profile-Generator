@@ -1,17 +1,19 @@
-const Manager = require("../lib/Manager");
-
 //create manager summary
-const generateManager = (aboutManager) => {
-  if (!aboutManager) {
-    return "";
-  }
+const generateManager = () => {
+
   return `
     <section class="my-3" id="about">
         <div class="flex-row justify-space-between centered text-dark bg-primary p-2 display-inline-block"> About My Team Members 
             <div class ="card col-12">
-                <h2 class ="employee-name-role">Employee Data</h2>
-                <p>${aboutManager}</p>
-                <a href="mailto:{emailAddress}">{emailAddress}</a>
+                <h2 class ="employee-name-role">
+                Team Manager: ${manager.getName()}<br>
+                ${manager.getRole()}<br>
+                </h2>
+                <h3 class = "employee-additional-info">
+                <p> ID: ${manager.getId()}</p>
+                <a href="mailto:${manager.getEmail()}"> Email </a>
+                <p> Office Number: ${manager.getOfficeNumber()}</p>
+                </h3>
             </div>
         </div>
     </section>
@@ -19,18 +21,20 @@ const generateManager = (aboutManager) => {
 };
 
 //create engineer summary from 'addEngineer'
-const generateEngineer = (addEngineer) => {
-  if (!addEngineer) {
-    return "";
-  }
+const generateEngineer = () => {
   return `
     <section class="my-3" id="about">
         <div class="flex-row justify-space-between centered text-dark bg-primary p-2 display-inline-block"> About My Team Members 
             <div class ="card col-12">
-                <h2 class ="employee-name-role">Employee Data</h2>
-                <p>${addEngineer}</p>
-                <a href="http://www.github.com/${github}" class="btn mt-auto"><i class="fab fa-github mr-2"></i>View Project on GitHub</a>
-                <a href="mailto:{emailAddress}">{emailAddress}</a>
+                <h2 class ="employee-name-role">
+                ${engineer.getName()}<br>
+                ${engineer.getRole()}<br>
+                </h2>
+                <h3 class = "employee-additional-info">
+                <p>${engineer.getId()}</p>
+                <a href="mailto:${engineer.getEmail()}">Email</a>
+                <a href="http://www.github.com/${engineer.getGithub()}" class="btn mt-auto"><i class="fab fa-github mr-2"></i>View Project on GitHub</a>
+                </h3>
             </div>
         </div>
     </section>
@@ -38,26 +42,28 @@ const generateEngineer = (addEngineer) => {
 };
 
 //create intern summary
-//how to access the specific deets within each section, like email
-const generateIntern = (addIntern) => {
-  if (!addIntern) {
-    return "";
-  }
+const generateIntern = (n) => {
+ 
   return `
     <section class="my-3" id="about">
         <div class="flex-row justify-space-between centered text-dark bg-primary p-2 display-inline-block"> About My Team Members 
             <div class ="card col-12">
-                <h2 class ="employee-name-role">Employee Data</h2>
-                <p>${addIntern}</p>
-                <p>${employeeId}</p>
-                <a href="mailto:{emailAddress}">{emailAddress}</a>
+                <h2 class ="employee-name-role">
+                ${intern.getName()}<br>
+                ${intern.getRole()}<br>
+                </h2>
+                <h3 class = "employee-additional-info">
+                <p>${intern.getId()}</p>
+                <a href="mailto:${intern.getEmail()}">Email</a>
+                <p> School: ${intern.getSchool()}</p>
+                </h3>
             </div>
         </div>
     </section>
     `;
 };
 
-/*add hyperlink of email address, that
-             When clicked, default email program opens and addy is populated to TO field*/
-/*add hyperlink of GitHub, that
-             When user enters username, it'll add to 'www.github.com/[]*/
+module.exports = templateData => {
+  // destructure projects and about data from templateData based on their property key names
+  const { generateManager, generateEngineer, generateIntern } = templateData;
+};
