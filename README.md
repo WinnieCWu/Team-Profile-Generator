@@ -18,13 +18,8 @@ No extra installations are needed for the user, aside from a working computer an
 
 ## Usage
 
-Please check out the attached link for a video tutorial of how to use the app, as well as live tests for my application.
+Please check out the link for a video tutorial of how to use my application: https://drive.google.com/file/d/1Xbvb4H6rAvaZCzDFFpGge3Z3nroEGzRo/view
 
-Please also check out the screenshots of my app.
-
-```md
-    ![alt text](assets/images/screenshot.png)
-```
 
 ## Credits
 
