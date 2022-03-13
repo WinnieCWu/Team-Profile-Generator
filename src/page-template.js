@@ -3,7 +3,7 @@ const generateManager = () => {
 
   return `
     <section class="my-3" id="about">
-        <div class="flex-row justify-space-between centered text-dark bg-primary p-2 display-inline-block"> About My Team Members 
+        <div class="flex-row justify-space-between centered text-dark bg-primary p-2 display-inline-block">
             <div class ="card col-12">
                 <h2 class ="employee-name-role">
                 Team Manager: ${manager.getName()}<br>
@@ -42,7 +42,7 @@ const generateEngineer = () => {
 };
 
 //create intern summary
-const generateIntern = (n) => {
+const generateIntern = () => {
  
   return `
     <section class="my-3" id="about">
@@ -63,7 +63,3 @@ const generateIntern = (n) => {
     `;
 };
 
-module.exports = templateData => {
-  // destructure projects and about data from templateData based on their property key names
-  const { generateManager, generateEngineer, generateIntern } = templateData;
-};

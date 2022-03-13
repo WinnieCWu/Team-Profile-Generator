@@ -78,11 +78,7 @@ const promptManager = () => {
     });
 };
 
-const mainMenu = (employeeData) => {
-  if (!employeeData.employees) {
-    employeeData.employees = [];
-  }
-
+const mainMenu = () => {
   inquirer
     .prompt([
       {
@@ -260,13 +256,13 @@ const goodbyeGreeting = () => {
 };
 
 promptManager()
-  .then(mainMenu)
-  .then((employeeData) => {
-    return generatePage(employeeData);
-  })
-  .then((pageHTML) => {
-    return writeFile(pageHTML);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+  // .then(mainMenu)
+  // .then((employees) => {
+  //   return generatePage(employees);
+  // })
+  // .then((fileContent) => {
+  //   return writeFile(fileContent);
+  // })
+  // .catch((err) => {
+  //   console.log(err);
+  // });
